@@ -20,5 +20,5 @@ export enum ProfitState {
   PROFIT = 'PROFIT',
   LOSS = 'LOSS',
   BREAK_EVEN = 'BREAK_EVEN',
-  NEUTRAL = 'NEUTRAL' // Initial state or zero
+  NEUTRAL = 'NEUTRAL', // Initial state or zero
 }

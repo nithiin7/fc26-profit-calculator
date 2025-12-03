@@ -15,27 +15,26 @@ const InputGroup: React.FC<InputGroupProps> = ({
   value,
   onChange,
   min = 0,
-  placeholder = "0",
+  placeholder = '0',
   helperText,
-  isInteger = false
+  isInteger = false,
 }) => {
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawVal = e.target.value;
     if (rawVal === '') {
       onChange('');
       return;
     }
-    
+
     let numVal = parseFloat(rawVal);
-    
+
     // Prevent negative if min is 0
     if (numVal < min) numVal = min;
-    
+
     if (isInteger) {
-        numVal = Math.floor(numVal);
+      numVal = Math.floor(numVal);
     }
-    
+
     onChange(numVal);
   };
 
@@ -43,7 +42,11 @@ const InputGroup: React.FC<InputGroupProps> = ({
     <div className="flex flex-col gap-1.5">
       <label className="text-sm font-medium text-neutral-600 flex justify-between">
         {label}
-        {helperText && <span className="text-neutral-400 text-xs font-normal">{helperText}</span>}
+        {helperText && (
+          <span className="text-neutral-400 text-xs font-normal">
+            {helperText}
+          </span>
+        )}
       </label>
       <div className="relative group">
         <input
