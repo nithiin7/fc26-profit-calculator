@@ -1,3 +1,12 @@
+export interface MarketItem {
+  id: string;
+  name: string;
+  buyPrice: number | '';
+  sellPrice: number | '';
+  quantity: number | '';
+  taxRate: number | '';
+}
+
 export interface MarketInputState {
   buyPrice: number | '';
   sellPrice: number | '';
@@ -14,6 +23,10 @@ export interface CalculationResult {
   profitPerItem: number;
   roi: number; // Return on Investment %
   breakEvenSellPrice: number;
+}
+
+export interface ItemCalculationResult extends CalculationResult {
+  itemId: string;
 }
 
 export enum ProfitState {
