@@ -8,6 +8,7 @@ interface InputGroupProps {
   placeholder?: string;
   helperText?: string;
   isInteger?: boolean;
+  isDarkMode?: boolean;
 }
 
 const InputGroup: React.FC<InputGroupProps> = ({
@@ -18,6 +19,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
   placeholder = '0',
   helperText,
   isInteger = false,
+  isDarkMode = false,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawVal = e.target.value;
@@ -38,11 +40,17 @@ const InputGroup: React.FC<InputGroupProps> = ({
     onChange(numVal);
   };
 
+  const labelTextClass = isDarkMode ? 'text-slate-300' : 'text-slate-700';
+  const helperTextClass = isDarkMode ? 'text-slate-500' : 'text-slate-500';
+  const inputClass = isDarkMode
+    ? 'w-full rounded-3xl border border-slate-800 bg-slate-950/90 px-4 py-3 text-lg font-semibold text-white outline-none transition focus:border-cyan-400/40 focus:ring-2 focus:ring-cyan-400/20 placeholder:text-slate-600'
+    : 'w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-lg font-semibold text-slate-950 outline-none transition focus:border-cyan-600/40 focus:ring-2 focus:ring-cyan-600/20 placeholder:text-slate-400';
+
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="flex items-center justify-between text-sm font-semibold text-slate-300">
+      <label className={`flex items-center justify-between text-sm font-semibold ${labelTextClass}`}>
         <span>{label}</span>
-        {helperText && <span className="text-xs font-normal text-slate-500">{helperText}</span>}
+        {helperText && <span className={`text-xs font-normal ${helperTextClass}`}>{helperText}</span>}
       </label>
       <div>
         <input
@@ -51,7 +59,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
           value={value}
           onChange={handleChange}
           placeholder={placeholder}
-          className="w-full rounded-3xl border border-slate-800 bg-slate-950/90 px-4 py-3 text-lg font-semibold text-white outline-none transition focus:border-cyan-400/40 focus:ring-2 focus:ring-cyan-400/20 placeholder:text-slate-600"
+          className={inputClass}
         />
       </div>
     </div>
