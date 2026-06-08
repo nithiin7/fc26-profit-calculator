@@ -26,22 +26,16 @@ const ResultRow: React.FC<ResultRowProps> = ({
   const formatted = isPercentage
     ? formatPercentage(animatedValue)
     : isCurrency
-      ? formatCurrency(animatedValue)
-      : Math.round(animatedValue).toString();
+    ? formatCurrency(animatedValue)
+    : Math.round(animatedValue).toString();
 
   return (
-    <div
-      className={`flex justify-between items-center py-2 ${highlight ? 'border-t border-dashed border-neutral-300 pt-3 mt-1' : ''}`}
-    >
-      <div className="flex items-center gap-1.5 text-neutral-500">
-        <span className="text-sm font-medium">{label}</span>
-      </div>
-      <div
-        className={`font-mono font-medium text-base ${negative ? 'text-loss' : 'text-neutral-900'}`}
-      >
+    <div className={`flex justify-between items-center gap-4 ${highlight ? 'border-t border-slate-800 pt-4 mt-4' : 'py-3'}`}>
+      <span className="text-sm text-slate-400">{label}</span>
+      <span className={`font-mono text-sm font-semibold ${negative ? 'text-rose-300' : 'text-slate-100'}`}>
         {negative && '-'}
         {formatted}
-      </div>
+      </span>
     </div>
   );
 };
