@@ -2,7 +2,7 @@
 
 ![React](https://img.shields.io/badge/React-19.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?style=for-the-badge&logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=for-the-badge&logo=vite&logoColor=white) ![FUT](https://img.shields.io/badge/FC26-Ultimate%20Team-111827?style=for-the-badge&logo=ea&logoColor=white)
 
-A clean, fast web calculator for EA FC 26 Ultimate Team traders who want to compare buy/sell prices, account for market tax, and optimize trading decisions in seconds.
+A clean, fast web calculator for EA FC 26 / FC 25 Ultimate Team traders who want to compare buy/sell prices, account for market tax, and optimize trading decisions in seconds.
 
 ## 🚀 What it does
 
