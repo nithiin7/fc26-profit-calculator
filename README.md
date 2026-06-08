@@ -8,13 +8,13 @@ A clean, fast web calculator for EA FC 26 Ultimate Team traders who want to comp
 
 This app lets you enter multiple market items with buy price, sell price, quantity, and tax rate. It then instantly computes:
 
-- total revenue
-- total cost
-- market tax amount
-- net revenue
-- profit or loss
-- ROI percentage
-- total item count
+- Total Revenue
+- Total Cost
+- Market Tax Amount
+- Net Revenue
+- Profit or Loss
+- ROI Percentage
+- Total Item Count
 
 Plus, it provides a polished real-time dashboard with copy-to-clipboard support for quick sharing.
 
