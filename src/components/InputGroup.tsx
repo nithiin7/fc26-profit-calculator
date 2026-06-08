@@ -27,37 +27,32 @@ const InputGroup: React.FC<InputGroupProps> = ({
     }
 
     let numVal = parseFloat(rawVal);
-
-    // Prevent negative if min is 0
-    if (numVal < min) numVal = min;
-
-    if (isInteger) {
-      numVal = Math.floor(numVal);
+    if (isNaN(numVal)) {
+      onChange('');
+      return;
     }
+
+    if (numVal < min) numVal = min;
+    if (isInteger) numVal = Math.floor(numVal);
 
     onChange(numVal);
   };
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-neutral-600 flex justify-between">
-        {label}
-        {helperText && (
-          <span className="text-neutral-400 text-xs font-normal">
-            {helperText}
-          </span>
-        )}
+      <label className="flex items-center justify-between text-sm font-semibold text-slate-300">
+        <span>{label}</span>
+        {helperText && <span className="text-xs font-normal text-slate-500">{helperText}</span>}
       </label>
-      <div className="relative group">
+      <div>
         <input
           type="number"
           min={min}
           value={value}
           onChange={handleChange}
           placeholder={placeholder}
-          className="w-full bg-white border border-neutral-200 rounded-lg px-3 py-2.5 text-neutral-900 font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all placeholder:text-neutral-300"
+          className="w-full rounded-3xl border border-slate-800 bg-slate-950/90 px-4 py-3 text-lg font-semibold text-white outline-none transition focus:border-cyan-400/40 focus:ring-2 focus:ring-cyan-400/20 placeholder:text-slate-600"
         />
-        {/* Subtle decorative corner accent for focused state implied by ring */}
       </div>
     </div>
   );

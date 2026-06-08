@@ -29,72 +29,60 @@ const ProfitCard: React.FC<ProfitCardProps> = ({ amount, state, roi }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Determine styles based on state
-  let bgClass = 'bg-neutral-50 border-neutral-200';
-  let textClass = 'text-neutral-900';
-  let icon = <IconMinus className="w-6 h-6 text-neutral-400" />;
-  let label = 'Break Even';
+  let stateLabel = 'Break Even';
+  let stateIcon = <IconMinus className="w-6 h-6 text-slate-400" />;
+  let stateTone = 'text-slate-100';
+  let chipBg = 'bg-slate-800/80 text-slate-300';
 
   if (state === ProfitState.PROFIT) {
-    bgClass = 'bg-profit-light/30 border-profit/20';
-    textClass = 'text-profit-dark';
-    icon = <IconTrendingUp className="w-6 h-6 text-profit" />;
-    label = 'Net Profit';
+    stateLabel = 'Net Profit';
+    stateIcon = <IconTrendingUp className="w-6 h-6 text-cyan-300" />;
+    stateTone = 'text-cyan-300';
+    chipBg = 'bg-cyan-500/10 text-cyan-200 ring ring-cyan-400/20';
   } else if (state === ProfitState.LOSS) {
-    bgClass = 'bg-loss-light/30 border-loss/20';
-    textClass = 'text-loss-dark';
-    icon = <IconTrendingDown className="w-6 h-6 text-loss" />;
-    label = 'Net Loss';
+    stateLabel = 'Net Loss';
+    stateIcon = <IconTrendingDown className="w-6 h-6 text-rose-300" />;
+    stateTone = 'text-rose-300';
+    chipBg = 'bg-rose-500/10 text-rose-200 ring ring-rose-400/20';
   }
 
   return (
-    <div
-      className={`relative w-full rounded-2xl border ${bgClass} p-6 transition-colors duration-300`}
-    >
-      <div className="flex justify-between items-start mb-2">
-        <div className="flex items-center gap-2">
-          <div className="p-2 bg-white rounded-lg shadow-sm border border-neutral-100">
-            {icon}
+    <div className="rounded-[2rem] border border-white/10 bg-slate-950/95 p-6 shadow-2xl shadow-slate-950/20">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-900/80 shadow-inner shadow-slate-950/40">
+            {stateIcon}
           </div>
-          <span className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-            {label}
-          </span>
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{stateLabel}</p>
+            <p className="mt-1 text-sm text-slate-400">Instant margin analysis with coin-ready totals</p>
+          </div>
         </div>
+
         <button
+          type="button"
           onClick={handleCopy}
-          className="p-1.5 text-neutral-400 hover:text-black transition-colors rounded hover:bg-black/5"
+          className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-slate-900/80 px-4 text-slate-300 transition hover:border-cyan-400/40 hover:text-white"
           title="Copy result"
           aria-label="Copy result to clipboard"
         >
-          {copied ? (
-            <IconCheck className="w-4 h-4 text-green-600" />
-          ) : (
-            <IconCopy className="w-4 h-4" />
-          )}
+          {copied ? <IconCheck className="w-5 h-5 text-emerald-400" /> : <IconCopy className="w-5 h-5" />}
         </button>
       </div>
 
-      <div className="mt-4 flex flex-col items-baseline">
-        <div
-          className={`text-5xl font-bold tracking-tight ${textClass} font-mono flex items-center gap-2`}
-        >
-          {formatCurrency(Math.abs(animatedAmount))}
-          <IconCoins className="w-8 h-8 opacity-50" />
+      <div className="mt-8 flex flex-col gap-4">
+        <div className={`flex items-end gap-3 ${stateTone}`}>
+          <span className="text-5xl font-semibold tracking-tight sm:text-6xl">
+            {formatCurrency(Math.abs(animatedAmount))}
+          </span>
+          <IconCoins className="w-10 h-10 opacity-60" />
         </div>
 
         {state !== ProfitState.NEUTRAL && (
-          <div className="mt-2 flex items-center gap-2">
-            <span
-              className={`text-sm font-medium px-2 py-0.5 rounded-full ${
-                roi >= 0
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-red-100 text-red-800'
-              }`}
-            >
-              {roi > 0 ? '+' : ''}
-              {animatedRoi.toFixed(2)}% ROI
-            </span>
-          </div>
+          <span className={`inline-flex rounded-full px-4 py-2 text-sm font-semibold ${chipBg}`}>
+            {roi > 0 ? '+' : ''}
+            {animatedRoi.toFixed(2)}% ROI
+          </span>
         )}
       </div>
     </div>
