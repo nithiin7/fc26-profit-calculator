@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import ResultRow from './components/ResultRow';
 import ProfitCard from './components/ProfitCard';
 import ItemCard from './components/ItemCard';
@@ -21,7 +21,11 @@ function App() {
     },
   ]);
 
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    const storedTheme = window.localStorage.getItem('theme');
+    return storedTheme === 'light' ? 'light' : 'dark';
+  });
   const isDarkMode = theme === 'dark';
 
   const baseBgClass = isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-950';
@@ -82,6 +86,11 @@ function App() {
   };
 
   const toggleTheme = () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem('theme', theme);
+  }, [theme]);
 
   return (
     <div className={`min-h-screen ${baseBgClass}`}>
