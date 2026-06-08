@@ -15,9 +15,10 @@ interface ProfitCardProps {
   amount: number;
   state: ProfitState;
   roi: number;
+  isDarkMode: boolean;
 }
 
-const ProfitCard: React.FC<ProfitCardProps> = ({ amount, state, roi }) => {
+const ProfitCard: React.FC<ProfitCardProps> = ({ amount, state, roi, isDarkMode }) => {
   const animatedAmount = useAnimatedNumber(amount);
   const animatedRoi = useAnimatedNumber(roi);
   const [copied, setCopied] = useState(false);
@@ -46,16 +47,26 @@ const ProfitCard: React.FC<ProfitCardProps> = ({ amount, state, roi }) => {
     chipBg = 'bg-rose-500/10 text-rose-200 ring ring-rose-400/20';
   }
 
+  const cardBaseClass = isDarkMode
+    ? 'rounded-[2rem] border border-white/10 bg-slate-950/95 p-6 shadow-2xl shadow-slate-950/20'
+    : 'rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm';
+
+  const headingTextClass = isDarkMode ? 'text-slate-100' : 'text-slate-950';
+  const detailTextClass = isDarkMode ? 'text-slate-400' : 'text-slate-500';
+  const iconWrapperClass = isDarkMode
+    ? 'flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-900/80 shadow-inner shadow-slate-950/40'
+    : 'flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-100 shadow-inner shadow-slate-200/40';
+
   return (
-    <div className="rounded-[2rem] border border-white/10 bg-slate-950/95 p-6 shadow-2xl shadow-slate-950/20">
+    <div className={cardBaseClass}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-900/80 shadow-inner shadow-slate-950/40">
+          <div className={iconWrapperClass}>
             {stateIcon}
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{stateLabel}</p>
-            <p className="mt-1 text-sm text-slate-400">Instant margin analysis with coin-ready totals</p>
+            <p className={`text-xs uppercase tracking-[0.3em] ${detailTextClass}`}>{stateLabel}</p>
+            <p className={`mt-1 text-sm ${detailTextClass}`}>Instant margin analysis with coin-ready totals</p>
           </div>
         </div>
 
@@ -72,10 +83,10 @@ const ProfitCard: React.FC<ProfitCardProps> = ({ amount, state, roi }) => {
 
       <div className="mt-8 flex flex-col gap-4">
         <div className={`flex items-end gap-3 ${stateTone}`}>
-          <span className="text-5xl font-semibold tracking-tight sm:text-6xl">
+          <span className={`text-5xl font-semibold tracking-tight sm:text-6xl ${headingTextClass}`}>
             {formatCurrency(Math.abs(animatedAmount))}
           </span>
-          <IconCoins className="w-10 h-10 opacity-60" />
+          <IconCoins className={`w-10 h-10 ${isDarkMode ? 'opacity-60' : 'opacity-70 text-slate-400'}`} />
         </div>
 
         {state !== ProfitState.NEUTRAL && (

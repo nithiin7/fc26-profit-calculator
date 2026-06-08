@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import ResultRow from './components/ResultRow';
 import ProfitCard from './components/ProfitCard';
 import ItemCard from './components/ItemCard';
-import { IconSoccer, IconTrophy, IconPlus } from './components/Icons';
+import { IconSoccer, IconPlus, IconMoon, IconSun } from './components/Icons';
 import { MarketItem, ProfitState } from './types';
 import { calculateTotalProfit } from './utils/calculations';
 
@@ -19,6 +19,26 @@ function App() {
       taxRate: 5,
     },
   ]);
+
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const isDarkMode = theme === 'dark';
+
+  const baseBgClass = isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-950';
+  const containerClass = isDarkMode
+    ? 'overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900/90 text-slate-100 shadow-2xl shadow-slate-950/20 backdrop-blur-xl'
+    : 'overflow-hidden rounded-[2rem] border border-slate-200 bg-white text-slate-950 shadow-sm';
+  const panelClass = isDarkMode
+    ? 'rounded-[2rem] border border-white/10 bg-slate-900/80 text-slate-100 shadow-xl shadow-slate-950/20'
+    : 'rounded-[2rem] border border-slate-200 bg-white text-slate-950 shadow-sm';
+  const cardClass = isDarkMode
+    ? 'rounded-3xl border border-white/10 bg-slate-950/80 text-slate-100'
+    : 'rounded-3xl border border-slate-200 bg-slate-50 text-slate-950';
+  const summaryCardClass = isDarkMode
+    ? 'rounded-[1.75rem] border border-white/10 bg-slate-950/70 p-5'
+    : 'rounded-[1.75rem] border border-slate-200 bg-slate-50 p-5';
+  const buttonClass = isDarkMode
+    ? 'inline-flex items-center gap-2 rounded-full bg-slate-900/90 px-4 py-2.5 text-sm font-semibold text-slate-100 shadow-lg shadow-slate-950/20 hover:bg-slate-800/90'
+    : 'inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-sm hover:bg-slate-200';
 
   const results = useMemo(() => calculateTotalProfit(items), [items]);
 
@@ -60,55 +80,66 @@ function App() {
     }
   };
 
+  const toggleTheme = () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className={`min-h-screen ${baseBgClass}`}>
       <div className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_18%),radial-gradient(circle_at_60%_30%,_rgba(168,85,247,0.14),_transparent_20%)]" />
+        <div
+          className={`pointer-events-none absolute inset-0 ${isDarkMode ? 'bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_18%),radial-gradient(circle_at_60%_30%,_rgba(168,85,247,0.14),_transparent_20)]' : 'bg-[radial-gradient(circle_at_top,_rgba(248,171,10,0.14),_transparent_18%),radial-gradient(circle_at_60%_30%,_rgba(20,83,45,0.08),_transparent_22)]'}`}
+        />
         <main className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="space-y-8">
-            <section className="overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900/90 px-6 py-8 shadow-2xl shadow-slate-950/20 backdrop-blur-xl sm:px-8">
+            <section className={`${containerClass} px-6 py-8 sm:px-8`}>
               <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                 <div className="space-y-4 max-w-2xl">
-                  <div className="inline-flex items-center gap-3 rounded-full border border-slate-700/70 bg-slate-950/80 px-4 py-2 text-sm text-slate-300">
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-cyan-400/10 text-cyan-300">
+                  <div className={`inline-flex items-center gap-3 rounded-full border px-4 py-2 text-sm ${isDarkMode ? 'border-slate-700/70 bg-slate-950/80 text-slate-300' : 'border-slate-200 bg-slate-100 text-slate-600'}`}>
+                    <span className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${isDarkMode ? 'bg-cyan-400/10 text-cyan-300' : 'bg-sky-100 text-sky-600'}`}>
                       <IconSoccer className="w-4 h-4" />
                     </span>
                     FC26 Ultimate Team Profit Console
                   </div>
 
                   <div className="space-y-2">
-                    <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                    <h1 className={`text-3xl font-semibold tracking-tight sm:text-4xl ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>
                       Game-winning market analysis for FC26 traders.
                     </h1>
-                    <p className="max-w-xl text-slate-400">
+                    <p className={`max-w-xl ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                       Enter your buy and sell prices, account for market tax, and see profit, ROI, and item totals instantly in a polished, modern dashboard.
                     </p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  <div className="rounded-3xl border border-white/10 bg-slate-950/80 p-4 text-center">
-                    <p className="text-2xl font-semibold text-cyan-300">100%</p>
-                    <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Live</p>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                    <div className={`${cardClass} p-4 text-center`}>
+                      <p className={`text-2xl font-semibold ${isDarkMode ? 'text-cyan-300' : 'text-cyan-600'}`}>100%</p>
+                      <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Live</p>
+                    </div>
+                    <div className={`${cardClass} p-4 text-center`}>
+                      <p className={`text-2xl font-semibold ${isDarkMode ? 'text-lime-300' : 'text-emerald-600'}`}>5%</p>
+                      <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Tax</p>
+                    </div>
+                    <div className={`${cardClass} p-4 text-center`}>
+                      <p className={`text-2xl font-semibold ${isDarkMode ? 'text-sky-300' : 'text-sky-600'}`}>ROI</p>
+                      <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Instant</p>
+                    </div>
                   </div>
-                  <div className="rounded-3xl border border-white/10 bg-slate-950/80 p-4 text-center">
-                    <p className="text-2xl font-semibold text-lime-300">5%</p>
-                    <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Tax</p>
-                  </div>
-                  <div className="rounded-3xl border border-white/10 bg-slate-950/80 p-4 text-center">
-                    <p className="text-2xl font-semibold text-sky-300">ROI</p>
-                    <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Instant</p>
-                  </div>
+
+                  <button type="button" onClick={toggleTheme} className={buttonClass}>
+                    {isDarkMode ? <IconSun className="w-4 h-4" /> : <IconMoon className="w-4 h-4" />}
+                    {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+                  </button>
                 </div>
               </div>
             </section>
 
             <section className="grid gap-8 xl:grid-cols-[1.75fr_1fr]">
-              <div className="space-y-6 rounded-[2rem] border border-white/10 bg-slate-900/80 p-6 shadow-xl shadow-slate-950/20">
+              <div className={`${panelClass} space-y-6 p-6`}>
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <h2 className="text-2xl font-semibold text-white">Trading Items</h2>
-                    <p className="mt-2 text-sm text-slate-400">Build and compare multiple listings with tax-aware profit calculations.</p>
+                    <h2 className={`text-2xl font-semibold ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>Trading Items</h2>
+                    <p className={`mt-2 text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>Build and compare multiple listings with tax-aware profit calculations.</p>
                   </div>
                   <button
                     onClick={handleAddItem}
@@ -127,42 +158,43 @@ function App() {
                       onItemChange={handleItemChange(item.id)}
                       onRemove={() => handleRemoveItem(item.id)}
                       showRemoveButton={items.length > 1}
+                      isDarkMode={isDarkMode}
                     />
                   ))}
                 </div>
               </div>
 
-              <ProfitCard amount={results.profit} state={profitState} roi={results.roi} />
+              <ProfitCard amount={results.profit} state={profitState} roi={results.roi} isDarkMode={isDarkMode} />
             </section>
 
-            <section className="rounded-[2rem] border border-white/10 bg-slate-900/80 p-6 shadow-xl shadow-slate-950/20">
+            <section className={`${panelClass} p-6`}>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-white">Transaction breakdown</h3>
-                  <p className="text-sm text-slate-400">Review revenue, fee impact, and item costs in one clean view.</p>
+                  <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>Transaction breakdown</h3>
+                  <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>Review revenue, fee impact, and item costs in one clean view.</p>
                 </div>
-                <div className="inline-flex items-center gap-3 rounded-full bg-slate-950/80 px-4 py-2 text-sm text-slate-300 ring-1 ring-white/10">
-                  <span className="text-slate-100">Tax</span>
-                  <span className="font-semibold text-white">{taxRateDisplay}%</span>
+                <div className={`inline-flex items-center gap-3 rounded-full px-4 py-2 text-sm ${isDarkMode ? 'bg-slate-950/80 text-slate-300 ring-1 ring-white/10' : 'bg-slate-100 text-slate-700 ring-1 ring-slate-200'}`}>
+                  <span className={isDarkMode ? 'text-slate-100' : 'text-slate-950'}>Tax</span>
+                  <span className={`font-semibold ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>{taxRateDisplay}%</span>
                 </div>
               </div>
 
               <div className="mt-6 grid gap-5 lg:grid-cols-2">
-                <div className="rounded-[1.75rem] border border-white/10 bg-slate-950/70 p-5">
+                <div className={summaryCardClass}>
                   <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Revenue</p>
                   <div className="mt-4 space-y-2">
-                    <ResultRow label="Total Revenue" value={results.totalSellRevenue} />
-                    <ResultRow label="Market Tax" value={results.taxAmount} negative />
-                    <ResultRow label="Net Revenue" value={results.netRevenue} highlight />
+                    <ResultRow label="Total Revenue" value={results.totalSellRevenue} isDarkMode={isDarkMode} />
+                    <ResultRow label="Market Tax" value={results.taxAmount} negative isDarkMode={isDarkMode} />
+                    <ResultRow label="Net Revenue" value={results.netRevenue} highlight isDarkMode={isDarkMode} />
                   </div>
                 </div>
-                <div className="rounded-[1.75rem] border border-white/10 bg-slate-950/70 p-5">
+                <div className={summaryCardClass}>
                   <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Cost</p>
                   <div className="mt-4 space-y-2">
-                    <ResultRow label="Total Cost" value={results.totalBuyCost} negative />
-                    <ResultRow label="Profit Per Item" value={results.profitPerItem} highlight />
-                    <div className="mt-4 rounded-3xl bg-slate-900/90 p-4 text-sm text-slate-300">
-                      <span className="font-semibold text-white">Total Items:</span> {items.length}
+                    <ResultRow label="Total Cost" value={results.totalBuyCost} negative isDarkMode={isDarkMode} />
+                    <ResultRow label="Profit Per Item" value={results.profitPerItem} highlight isDarkMode={isDarkMode} />
+                    <div className={`mt-4 rounded-3xl p-4 text-sm ${isDarkMode ? 'bg-slate-900/90 text-slate-300' : 'bg-slate-100 text-slate-700'}`}>
+                      <span className={`font-semibold ${isDarkMode ? 'text-white' : 'text-slate-950'}`}>Total Items:</span> {items.length}
                     </div>
                   </div>
                 </div>
